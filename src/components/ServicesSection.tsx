@@ -12,6 +12,9 @@ import chartInterpretation from "@/assets/services/chart-interpretation.jpg";
 import electional from "@/assets/services/electional.jpg";
 import vastu from "@/assets/services/vastu.jpg";
 import aesthetics from "@/assets/services/aesthetics.jpg";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const services = [
   { name: "Career Readings", image: careerReading, sub: "Suitable Career · Wealth & Fame · Job-Related" },
@@ -115,5 +118,55 @@ const ServicesSection = () => {
     </section>
   );
 };
+export default function ServicesSection() {
+  const containerRef = useRef(null);
+  const horizontalRef = useRef(null);
 
+  useEffect(() => {
+    const el = horizontalRef.current;
+
+    // Horizontal scroll animation
+    gsap.to(el, {
+      x: () => -(el.scrollWidth - window.innerWidth),
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: () => `+=${el.scrollWidth}`,
+        scrub: 1,
+        pin: true,
+      },
+    });
+
+    // Stagger animation for cards
+    gsap.from(".service-card", {
+      opacity: 0,
+      y: 100,
+      stagger: 0.2,
+      duration: 1,
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 80%",
+      },
+    });
+  }, []);
+
+  return (
+    <section ref={containerRef} className="h-screen overflow-hidden">
+      <div
+        ref={horizontalRef}
+        className="flex w-[500vw] h-full"
+      >
+        {services.map((service, i) => (
+          <div
+            key={i}
+            className="service-card w-screen flex items-center justify-center text-4xl font-bold"
+          >
+            {service}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 export default ServicesSection;
