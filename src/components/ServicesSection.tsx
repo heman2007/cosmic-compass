@@ -1,32 +1,30 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-import birthChart from "@/assets/services/birth-chart.jpg";
-import tarotReading from "@/assets/services/tarot-reading.jpg";
-import compatibility from "@/assets/services/compatibility.jpg";
-import transitReading from "@/assets/services/transit-reading.jpg";
-import solarReturn from "@/assets/services/solar-return.jpg";
-import lunarReturn from "@/assets/services/lunar-return.jpg";
-import synastry from "@/assets/services/synastry.jpg";
 import careerReading from "@/assets/services/career-reading.jpg";
+import marriage from "@/assets/services/marriage.jpg";
+import solarReturn from "@/assets/services/solar-return.jpg";
+import karma from "@/assets/services/karma.jpg";
 import healthReading from "@/assets/services/health-reading.jpg";
-import relocation from "@/assets/services/relocation.jpg";
+import travel from "@/assets/services/travel.jpg";
+import spirituality from "@/assets/services/spirituality.jpg";
+import chartInterpretation from "@/assets/services/chart-interpretation.jpg";
 import electional from "@/assets/services/electional.jpg";
-import horary from "@/assets/services/horary.jpg";
+import vastu from "@/assets/services/vastu.jpg";
+import aesthetics from "@/assets/services/aesthetics.jpg";
 
 const services = [
-  { name: "Birth Chart", image: birthChart },
-  { name: "Tarot Reading", image: tarotReading },
-  { name: "Compatibility", image: compatibility },
-  { name: "Transit Reading", image: transitReading },
-  { name: "Solar Return", image: solarReturn },
-  { name: "Lunar Return", image: lunarReturn },
-  { name: "Synastry", image: synastry },
-  { name: "Career Reading", image: careerReading },
-  { name: "Health Reading", image: healthReading },
-  { name: "Relocation Chart", image: relocation },
-  { name: "Electional", image: electional },
-  { name: "Horary", image: horary },
+  { name: "Career Readings", image: careerReading, sub: "Suitable Career · Wealth & Fame · Job-Related" },
+  { name: "Marriage & Compatibility", image: marriage, sub: "Future Spouse · Compatibility · Marriage" },
+  { name: "Time & Life Phases", image: solarReturn, sub: "Solar Return · Lunar Return · Mahadasha" },
+  { name: "Karmic & Soul Level", image: karma, sub: "Pending Karma · Relationship · Children Progeny" },
+  { name: "Health & Diseases", image: healthReading, sub: "Medical Astrology Analysis" },
+  { name: "Travel & Relocation", image: travel, sub: "Relocation & Travel Reading" },
+  { name: "Spirituality & Moksha", image: spirituality, sub: "Liberation & Spiritual Path" },
+  { name: "Chart Interpretation", image: chartInterpretation, sub: "Persona & Transit Charts" },
+  { name: "Muhurta & Electional", image: electional, sub: "Auspicious Timing Selection" },
+  { name: "Vastu & Space", image: vastu, sub: "Home Decoration & Energy" },
+  { name: "Personal Aesthetics", image: aesthetics, sub: "Fashion · Colour · Style" },
 ];
 
 const ServicesSection = () => {
@@ -34,7 +32,6 @@ const ServicesSection = () => {
 
   return (
     <section id="services" className="relative bg-background">
-      {/* Section header */}
       <div className="px-6 py-16 md:py-24">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -47,7 +44,6 @@ const ServicesSection = () => {
         </motion.h2>
       </div>
 
-      {/* Vertical strips container */}
       <div className="flex h-[80vh] md:h-screen w-full overflow-hidden">
         {services.map((service, index) => (
           <motion.div
@@ -83,16 +79,28 @@ const ServicesSection = () => {
 
             {/* Service name */}
             <div className="absolute inset-0 flex items-end justify-center pb-8 md:pb-12">
-              <motion.span
-                className="font-heading text-foreground text-lg md:text-2xl font-light tracking-wide whitespace-nowrap"
-                style={{
-                  writingMode: activeIndex === index ? "horizontal-tb" : "vertical-rl",
-                  textOrientation: "mixed",
-                  transition: "all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)",
-                }}
-              >
-                {service.name}
-              </motion.span>
+              <div className="flex flex-col items-center gap-2">
+                {activeIndex === index && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.15 }}
+                    className="font-body text-xs text-primary/80 tracking-widest uppercase text-center max-w-[200px]"
+                  >
+                    {service.sub}
+                  </motion.span>
+                )}
+                <motion.span
+                  className="font-heading text-foreground text-lg md:text-2xl font-light tracking-wide whitespace-nowrap"
+                  style={{
+                    writingMode: activeIndex === index ? "horizontal-tb" : "vertical-rl",
+                    textOrientation: "mixed",
+                    transition: "all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)",
+                  }}
+                >
+                  {service.name}
+                </motion.span>
+              </div>
             </div>
 
             {/* Number */}
