@@ -312,6 +312,8 @@ const Tarot = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <Footer variant="tarot" />
     </main>
   );
 };
