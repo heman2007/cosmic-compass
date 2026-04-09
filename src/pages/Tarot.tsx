@@ -1,8 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, X, ShoppingBag, Plus, Check } from "lucide-react";
 import tarotHero from "@/assets/tarot-hero.jpg";
+import { useCart } from "@/contexts/CartContext";
 
 interface TarotService {
   name: string;
@@ -46,6 +47,11 @@ const howItWorks = [
 
 const Tarot = () => {
   const [selectedService, setSelectedService] = useState<TarotService | null>(null);
+  const { items, addItem } = useCart();
+  const isInCart = (id: string) => items.some((i) => i.id === id);
+  const handleAddToCart = (service: TarotService) => {
+    addItem({ id: `tarot-${service.name}`, name: service.name, price: `${service.price} | ${service.priceUSD}`, type: "tarot" });
+  };
 
   return (
     <main className="bg-background min-h-screen">
@@ -247,6 +253,17 @@ const Tarot = () => {
         </div>
       </section>
 
+      {/* Floating cart button */}
+      {items.length > 0 && (
+        <Link
+          to="/cart"
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-5 py-3 bg-[hsl(280,60%,50%)] text-foreground rounded-full shadow-lg hover:bg-[hsl(280,60%,60%)] transition-colors font-body text-sm tracking-wide"
+        >
+          <ShoppingBag className="w-4 h-4" />
+          Cart ({items.length})
+        </Link>
+      )}
+
       {/* Service Detail Modal */}
       <AnimatePresence>
         {selectedService && (
@@ -279,10 +296,17 @@ const Tarot = () => {
               <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">
                 {selectedService.description}
               </p>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between gap-3">
                 <span className="px-4 py-2 rounded-lg bg-[hsl(280,60%,50%)]/10 border border-[hsl(280,60%,50%)]/20 font-body text-sm font-medium text-[hsl(280,60%,70%)]">
                   {selectedService.price} | {selectedService.priceUSD}
                 </span>
+                <button
+                  onClick={() => handleAddToCart(selectedService)}
+                  disabled={isInCart(`tarot-${selectedService.name}`)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[hsl(280,60%,50%)] text-foreground font-body text-xs tracking-widest uppercase hover:bg-[hsl(280,60%,60%)] transition-colors disabled:opacity-50"
+                >
+                  {isInCart(`tarot-${selectedService.name}`) ? <><Check className="w-3 h-3" /> Added</> : <><Plus className="w-3 h-3" /> Add to Cart</>}
+                </button>
               </div>
             </motion.div>
           </motion.div>

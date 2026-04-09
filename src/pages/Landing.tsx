@@ -52,7 +52,7 @@ const Landing = () => {
           transition={{ duration: 0.8 }}
           className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4"
         >
-          Welcome to
+          Step into the unknown
         </motion.p>
 
         <motion.h1
@@ -61,7 +61,7 @@ const Landing = () => {
           transition={{ duration: 1, delay: 0.15 }}
           className="font-heading text-5xl md:text-7xl lg:text-8xl font-light text-foreground text-center leading-[0.95] mb-4"
         >
-          That Intuitive
+          Welcome to <span className="italic text-primary">Healing</span>
         </motion.h1>
 
         <motion.p
