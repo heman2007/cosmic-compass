@@ -46,7 +46,11 @@ const howItWorks = [
 ];
 
 const Tarot = () => {
-  const [selectedService, setSelectedService] = useState<TarotService | null>(null);
+  const { items, addItem } = useCart();
+  const isInCart = (id: string) => items.some((i) => i.id === id);
+  const handleAddToCart = (service: TarotService) => {
+    addItem({ id: `tarot-${service.name}`, name: service.name, price: `${service.price} | ${service.priceUSD}`, type: "tarot" });
+  };
 
   return (
     <main className="bg-background min-h-screen">
