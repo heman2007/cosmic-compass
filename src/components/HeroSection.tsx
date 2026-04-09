@@ -52,19 +52,13 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="flex gap-4 justify-center"
+          className="flex justify-center"
         >
           <a
             href="#services"
-            className="px-8 py-3 bg-primary text-primary-foreground font-body text-sm tracking-widest uppercase hover:bg-gold-light transition-colors duration-300"
+            className="px-10 py-4 bg-primary text-primary-foreground font-body text-sm tracking-widest uppercase hover:bg-gold-light transition-colors duration-300"
           >
             Explore Services
-          </a>
-          <a
-            href="#services"
-            className="px-8 py-3 border border-primary text-primary font-body text-sm tracking-widest uppercase hover:bg-primary/10 transition-colors duration-300"
-          >
-            Book a Reading
           </a>
         </motion.div>
       </div>
