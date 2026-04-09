@@ -342,6 +342,17 @@ const ServicesSection = () => {
         </div>
       </section>
 
+      {/* Floating cart button */}
+      {items.length > 0 && (
+        <Link
+          to="/cart"
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-5 py-3 bg-primary text-primary-foreground rounded-full shadow-lg hover:bg-primary/90 transition-colors font-body text-sm tracking-wide"
+        >
+          <ShoppingBag className="w-4 h-4" />
+          Cart ({items.length})
+        </Link>
+      )}
+
       {/* Service Detail Modal */}
       <AnimatePresence>
         {selectedService && (
@@ -363,17 +374,8 @@ const ServicesSection = () => {
             >
               {/* Modal header image */}
               <div className="relative h-48 md:h-56 overflow-hidden rounded-t-2xl">
-                <img
-                  src={selectedService.image}
-                  alt={selectedService.name}
-                  className="w-full h-full object-cover"
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: "linear-gradient(to top, hsl(var(--card)) 0%, transparent 60%)",
-                  }}
-                />
+                <img src={selectedService.image} alt={selectedService.name} className="w-full h-full object-cover" />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, hsl(var(--card)) 0%, transparent 60%)" }} />
                 <button
                   onClick={() => setSelectedService(null)}
                   className="absolute top-4 right-4 w-10 h-10 rounded-full bg-background/60 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-background/80 transition-colors"
@@ -381,61 +383,71 @@ const ServicesSection = () => {
                   <X className="w-5 h-5" />
                 </button>
                 <div className="absolute bottom-4 left-6 right-6">
-                  <h3 className="font-heading text-3xl md:text-4xl font-light text-foreground">
-                    {selectedService.name}
-                  </h3>
+                  <h3 className="font-heading text-3xl md:text-4xl font-light text-foreground">{selectedService.name}</h3>
                 </div>
               </div>
 
               <div className="p-6 md:p-8 space-y-6">
-                {/* Single service (no sub-services) */}
+                {/* Single service */}
                 {selectedService.description && (
                   <div>
-                    <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                      {selectedService.description}
-                    </p>
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed">{selectedService.description}</p>
                     {selectedService.price && (
-                      <div className="mt-4 inline-block px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
-                        <span className="font-body text-sm font-medium text-primary">{selectedService.price}</span>
+                      <div className="mt-4 flex items-center justify-between">
+                        <span className="inline-block px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 font-body text-sm font-medium text-primary">
+                          {selectedService.price}
+                        </span>
+                        <button
+                          onClick={() => handleAddToCart(selectedService.name, selectedService.price!)}
+                          disabled={isInCart(selectedService.name)}
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-body text-xs tracking-widest uppercase hover:bg-primary/90 transition-colors disabled:opacity-50"
+                        >
+                          {isInCart(selectedService.name) ? <><Check className="w-3 h-3" /> Added</> : <><Plus className="w-3 h-3" /> Add to Cart</>}
+                        </button>
                       </div>
                     )}
                   </div>
                 )}
 
                 {/* Sub-services */}
-                {selectedService.subServices?.map((sub, i) => (
-                  <div key={i} className="border-b border-border/20 pb-5 last:border-0">
-                    <div className="flex items-start justify-between gap-4 mb-2">
-                      <h4 className="font-heading text-xl font-light text-foreground">
-                        {sub.name}
-                      </h4>
-                      <span className="font-body text-xs font-medium text-primary whitespace-nowrap bg-primary/10 px-3 py-1 rounded-full">
-                        {sub.price}
-                      </span>
+                {selectedService.subServices?.map((sub, i) => {
+                  const id = `${selectedService.name}-${sub.name}`;
+                  return (
+                    <div key={i} className="border-b border-border/20 pb-5 last:border-0">
+                      <div className="flex items-start justify-between gap-4 mb-2">
+                        <h4 className="font-heading text-xl font-light text-foreground">{sub.name}</h4>
+                        <span className="font-body text-xs font-medium text-primary whitespace-nowrap bg-primary/10 px-3 py-1 rounded-full">{sub.price}</span>
+                      </div>
+                      <p className="font-body text-sm text-muted-foreground leading-relaxed mb-3">{sub.description}</p>
+                      <button
+                        onClick={() => handleAddToCart(sub.name, sub.price, selectedService.name)}
+                        disabled={isInCart(id)}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20 font-body text-xs tracking-widest uppercase text-primary hover:bg-primary/20 transition-colors disabled:opacity-50"
+                      >
+                        {isInCart(id) ? <><Check className="w-3 h-3" /> Added</> : <><Plus className="w-3 h-3" /> Add to Cart</>}
+                      </button>
                     </div>
-                    <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                      {sub.description}
-                    </p>
-                  </div>
-                ))}
+                  );
+                })}
 
                 {/* Bundle offer */}
                 {selectedService.bundleName && (
                   <div className="mt-2 p-5 rounded-xl border border-primary/30 bg-primary/5">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="font-body text-[10px] tracking-[0.2em] uppercase text-primary/70">
-                        Bundle & Save
-                      </span>
+                      <span className="font-body text-[10px] tracking-[0.2em] uppercase text-primary/70">Bundle & Save</span>
                     </div>
-                    <h4 className="font-heading text-xl font-light text-primary mb-2">
-                      {selectedService.bundleName}
-                    </h4>
-                    <p className="font-body text-sm text-muted-foreground leading-relaxed mb-3">
-                      {selectedService.bundleDescription}
-                    </p>
-                    <span className="font-body text-sm font-medium text-primary">
-                      {selectedService.bundlePrice}
-                    </span>
+                    <h4 className="font-heading text-xl font-light text-primary mb-2">{selectedService.bundleName}</h4>
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed mb-3">{selectedService.bundleDescription}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-body text-sm font-medium text-primary">{selectedService.bundlePrice}</span>
+                      <button
+                        onClick={() => handleAddToCart(selectedService.bundleName!, selectedService.bundlePrice!, selectedService.name)}
+                        disabled={isInCart(`${selectedService.name}-${selectedService.bundleName}`)}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground font-body text-xs tracking-widest uppercase hover:bg-primary/90 transition-colors disabled:opacity-50"
+                      >
+                        {isInCart(`${selectedService.name}-${selectedService.bundleName}`) ? <><Check className="w-3 h-3" /> Added</> : <><Plus className="w-3 h-3" /> Add Bundle</>}
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
