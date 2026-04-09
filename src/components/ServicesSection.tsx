@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ShoppingBag, Plus, Check } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
 
 import careerReading from "@/assets/services/career-reading.jpg";
 import marriage from "@/assets/services/marriage.jpg";
