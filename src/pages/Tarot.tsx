@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, X, ShoppingBag, Plus, Check } from "lucide-react";
+import Footer from "@/components/Footer";
 import tarotHero from "@/assets/tarot-hero.jpg";
 import { useCart } from "@/contexts/CartContext";
 
