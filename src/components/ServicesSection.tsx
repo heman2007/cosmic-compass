@@ -186,6 +186,14 @@ const ServicesSection = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const { items, addItem } = useCart();
+
+  const isInCart = (id: string) => items.some((i) => i.id === id);
+
+  const handleAddToCart = (name: string, price: string, parentName?: string) => {
+    const id = parentName ? `${parentName}-${name}` : name;
+    addItem({ id, name, parentName, price, type: "astrology" });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
