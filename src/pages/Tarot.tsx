@@ -38,6 +38,12 @@ const tarotServices: TarotService[] = [
     priceUSD: "$58",
     description: "The most comprehensive reading — a full deep-dive into your situation, past influences, present dynamics, and future trajectory.",
   },
+  {
+    name: "Priority Reading",
+    price: "₹555",
+    priceUSD: "$9.99",
+    description: "Add-on for immediate delivery within a few hours. Can be combined with any reading above for urgent clarity.",
+  },
 ];
 
 const howItWorks = [
@@ -207,49 +213,14 @@ const Tarot = () => {
       {/* Policies */}
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="p-6 rounded-xl border border-border/20 bg-card/30"
-            >
-              <h3 className="font-heading text-xl font-light text-[hsl(280,60%,70%)] mb-4">Delivery</h3>
-              <p className="font-body text-sm text-muted-foreground">Within 24 hours of payment confirmation.</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="p-6 rounded-xl border border-border/20 bg-card/30"
-            >
-              <h3 className="font-heading text-xl font-light text-[hsl(280,60%,70%)] mb-4">Priority Reading</h3>
-              <p className="font-body text-sm text-muted-foreground">
-                Immediate readings (within a few hours): <span className="text-[hsl(280,60%,70%)]">₹555 | $9.99 extra</span>
-              </p>
-            </motion.div>
-          </div>
-
-          {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center"
+            className="p-6 rounded-xl border border-border/20 bg-card/30 max-w-xl mx-auto"
           >
-            <a
-              href="https://thatintuitivereader.tumblr.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-10 py-4 bg-[hsl(280,60%,50%)] text-foreground font-body text-sm tracking-widest uppercase hover:bg-[hsl(280,60%,60%)] transition-colors duration-300"
-            >
-              Book on Tumblr
-            </a>
-            <p className="font-body text-xs text-muted-foreground mt-4">
-              @thatintuitivereader
-            </p>
+            <h3 className="font-heading text-xl font-light text-[hsl(280,60%,70%)] mb-4">Delivery</h3>
+            <p className="font-body text-sm text-muted-foreground">Within 24 hours of payment confirmation.</p>
           </motion.div>
         </div>
       </section>
