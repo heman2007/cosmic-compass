@@ -69,16 +69,6 @@ const Astrology = () => {
               </div>
             ))}
           </div>
-          <div className="text-center">
-            <a
-              href="https://thatintuitivespeaker.tumblr.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-10 py-4 bg-primary text-primary-foreground font-body text-sm tracking-widest uppercase hover:bg-gold-light transition-colors duration-300"
-            >
-              Contact on Tumblr
-            </a>
-          </div>
         </CollapsibleInfo>
 
         <CollapsibleInfo title="Policies & Terms" subtitle="Good to Know">
