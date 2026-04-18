@@ -224,13 +224,14 @@ const Cart = () => {
 
               <button
                 type="submit"
-                className="w-full py-4 bg-primary text-primary-foreground font-body text-sm tracking-widest uppercase hover:bg-primary/90 transition-colors rounded-lg"
+                disabled={loading}
+                className="w-full py-4 bg-primary text-primary-foreground font-body text-sm tracking-widest uppercase hover:bg-primary/90 transition-colors rounded-lg flex items-center justify-center gap-2 disabled:opacity-60"
               >
-                Submit Booking Request
+                {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processing…</> : "Pay & Confirm Booking"}
               </button>
 
               <p className="font-body text-[10px] text-muted-foreground/40 text-center">
-                You'll receive a payment link via email after submission.
+                Secure payment via Razorpay. You'll receive a confirmation email after payment.
               </p>
             </form>
           </div>
