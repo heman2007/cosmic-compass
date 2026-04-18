@@ -6,12 +6,6 @@ import { useCart, VALID_PROMOS } from "@/contexts/CartContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
-declare global {
-  interface Window {
-    Razorpay: new (options: Record<string, unknown>) => { open: () => void };
-  }
-}
-
 const Cart = () => {
   const { items, removeItem, clearCart, promoCode, setPromoCode, promoApplied, applyPromo } = useCart();
   const location = useLocation();
@@ -38,7 +32,7 @@ const Cart = () => {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke("create-razorpay-order", {
+      const { data, error } = await supabase.functions.invoke("send-booking-request", {
         body: {
           type: cartType,
           name,
@@ -56,44 +50,14 @@ const Cart = () => {
         },
       });
 
-      if (error || !data?.orderId) {
-        throw new Error(error?.message || "Could not create order");
+      if (error || !data?.ok) {
+        throw new Error(error?.message || "Could not send booking request");
       }
-      if (!window.Razorpay) {
-        throw new Error("Razorpay script not loaded");
-      }
-
-      const rzp = new window.Razorpay({
-        key: data.keyId,
-        amount: data.amount,
-        currency: data.currency,
-        order_id: data.orderId,
-        name: cartType === "tarot" ? "That Intuitive Reader" : "That Intuitive Speaker",
-        description: `${items.length} service${items.length !== 1 ? "s" : ""}`,
-        prefill: { name, email },
-        theme: { color: "#C5942A" },
-        handler: async (response: {
-          razorpay_order_id: string;
-          razorpay_payment_id: string;
-          razorpay_signature: string;
-        }) => {
-          const { data: vData, error: vErr } = await supabase.functions.invoke(
-            "verify-razorpay-payment",
-            { body: response }
-          );
-          if (vErr || !vData?.verified) {
-            toast({ title: "Payment verification failed", description: "Please contact support.", variant: "destructive" });
-            return;
-          }
-          setSubmitted(true);
-        },
-        modal: { ondismiss: () => setLoading(false) },
-      });
-
-      rzp.open();
+      setSubmitted(true);
     } catch (err) {
       console.error(err);
       toast({ title: "Something went wrong", description: String(err), variant: "destructive" });
+    } finally {
       setLoading(false);
     }
   };
