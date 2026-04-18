@@ -1,7 +1,4 @@
 project_id = "helrlqxkyxoyeipjxdjm"
 
-[functions.create-razorpay-order]
-verify_jwt = false
-
-[functions.verify-razorpay-payment]
+[functions.send-booking-request]
 verify_jwt = false

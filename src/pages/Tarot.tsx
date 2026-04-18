@@ -50,6 +50,7 @@ const howItWorks = [
   "Share your situation and questions in detail beforehand.",
   "Your reading will be delivered via voice notes on chat.",
   "Time mentioned refers to the depth and duration of the reading, not a live session.",
+  "Delivery within 24 hours of payment confirmation.",
 ];
 
 const Tarot = () => {
