@@ -74,7 +74,7 @@ const Cart = () => {
           <CheckCircle className="w-16 h-16 text-primary mx-auto mb-6" />
           <h1 className="font-heading text-4xl font-light text-foreground mb-4">Booking Received</h1>
           <p className="font-body text-sm text-muted-foreground mb-8">
-            We've received your request. You'll receive a payment link and further instructions at <span className="text-primary">{email}</span> shortly.
+            Thank you, <span className="text-primary">{name}</span>. Your booking request has been sent. You'll receive payment instructions and next steps at <span className="text-primary">{email}</span> shortly.
           </p>
           <Link
             to="/"
@@ -260,11 +260,11 @@ const Cart = () => {
                 disabled={loading}
                 className="w-full py-4 bg-primary text-primary-foreground font-body text-sm tracking-widest uppercase hover:bg-primary/90 transition-colors rounded-lg flex items-center justify-center gap-2 disabled:opacity-60"
               >
-                {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processing…</> : "Pay & Confirm Booking"}
+                {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</> : "Send Booking Request"}
               </button>
 
               <p className="font-body text-[10px] text-muted-foreground/40 text-center">
-                Secure payment via Razorpay. You'll receive a confirmation email after payment.
+                Your request will be sent to our team. We'll reply with payment instructions and next steps.
               </p>
             </form>
           </div>
