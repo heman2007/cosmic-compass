@@ -96,7 +96,7 @@ const Landing = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
 
                 <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-                  <span className={`font-body text-[10px] tracking-[0.3em] uppercase ${portal.textAccent} opacity-70 block mb-2`}>
+                  <span className={`inline-block font-body text-xs font-semibold tracking-[0.35em] uppercase ${portal.textAccent} mb-4 px-3 py-1 rounded-md border ${portal.borderColor} bg-background/40 backdrop-blur-sm`}>
                     {portal.subtitle}
                   </span>
                   <h2 className="font-heading text-3xl md:text-4xl font-light text-foreground mb-3">
