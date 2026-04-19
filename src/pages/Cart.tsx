@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft, X, ShoppingBag, Tag, CheckCircle, Loader2 } from "lucide-react";
 import { useCart, VALID_PROMOS } from "@/contexts/CartContext";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 const Cart = () => {
@@ -31,28 +30,27 @@ const Cart = () => {
     if (loading) return;
     setLoading(true);
 
-    try {
-      const { data, error } = await supabase.functions.invoke("send-booking-request", {
-        body: {
-          type: cartType,
-          name,
-          email,
-          message,
-          gender,
-          dob,
-          birthTime,
-          birthPlace,
-          currentResidence,
-          contactHandle,
-          items,
-          promoCode: promoApplied ? promoCode : undefined,
-          discountPercent: discount,
-        },
-      });
+    // TODO: Wire this up to your own backend (e.g. POST to your API endpoint)
+    const payload = {
+      type: cartType,
+      name,
+      email,
+      message,
+      gender,
+      dob,
+      birthTime,
+      birthPlace,
+      currentResidence,
+      contactHandle,
+      items,
+      promoCode: promoApplied ? promoCode : undefined,
+      discountPercent: discount,
+    };
 
-      if (error || !data?.ok) {
-        throw new Error(error?.message || "Could not send booking request");
-      }
+    try {
+      console.log("Booking request payload:", payload);
+      // Simulate a brief delay so the loading state is visible
+      await new Promise((r) => setTimeout(r, 400));
       setSubmitted(true);
     } catch (err) {
       console.error(err);
